@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NANO-PULSE - Hand-drawn medical visual novel and geometric puzzle dossiers across three socioeconomic tiers (Siddharth, Kabir, Radha).">
+  <title>NANO-PULSE • Medical Visual Novel & Geometry Dossiers</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="game-app">
+    <!-- Top Medical Journal Header -->
+    <header class="game-top-bar" id="game-top-bar">
+      <div class="brand-section">
+        <span class="brand-stamp-icon">⚕</span>
+        <h1 class="game-title-text">NANO-PULSE</h1>
+        <span class="game-title-badge">MEDICAL VISUAL NOVEL</span>
+      </div>
+      <div class="top-bar-controls">
+        <button id="btn-header-patient" class="top-btn highlight-patient-btn" title="Switch active patient dossier">
+          <span>📁</span> DOSSIER: <span id="current-diagnosis-name">COGNITIVE BURNOUT</span>
+        </button>
+        <button id="btn-header-story" class="top-btn" title="Play patient's background visual novel story">
+          <span>📖</span> PROLOGUE STORY
+        </button>
+        <button id="btn-header-levels" class="top-btn" title="Select medical recovery stage">
+          <span>📑</span> STAGES
+        </button>
+        <button id="btn-header-difficulty" class="top-btn" title="Cycle difficulty (Resident / Specialist / Chief Surgeon)">
+          <span>⚙️</span> <span id="diff-btn-label">RESIDENT</span>
+        </button>
+        <button id="btn-header-journal" class="top-btn" title="Inspect physician's handwritten clinical notes">
+          <span>📜</span> CLINICAL JOURNAL
+        </button>
+        <button id="btn-header-report" class="top-btn" title="View Neural Stress & Cognitive Report Card">
+          <span>📊</span> REPORT CARD
+        </button>
+        <button id="btn-quick-mute" class="top-btn" title="Toggle audio sound effects">
+          🔊 AUDIO
+        </button>
+      </div>
+    </header>
+
+    <!-- Real-Time Patient Vitals & Telemetry HUD Strip -->
+    <section id="vitals-hud" aria-label="Clinical Telemetry & Stress Index">
+      <div class="patient-identity">
+        <div class="patient-name-row">
+          <span id="patient-name-display" class="patient-name">CASE: SIDDHARTH RAO</span>
+          <span id="vital-phase-tag" class="phase-pill">DX-NEURO-704B</span>
+        </div>
+        <span id="patient-tier-display" class="patient-sub-tier">UPPER-MIDDLE CLASS • ARCHITECT</span>
+      </div>
+
+      <!-- Real-Time Stress & Bio-Harmonic Telemetry Monitor -->
+      <div class="telemetry-strip">
+        <div class="tel-stat">
+          <span class="tel-label">DIFFICULTY</span>
+          <span id="difficulty-badge" class="tel-value" style="color:#34d399;border:1px solid #34d399;padding:0 4px;">RESIDENT</span>
+        </div>
+        <div class="tel-stat">
+          <span class="tel-label">MOUSE JITTER</span>
+          <span id="telemetry-jitter-value" class="tel-value">12%</span>
+        </div>
+        <div class="tel-stat">
+          <span class="tel-label">CLICK FREQ</span>
+          <span id="telemetry-clicks-value" class="tel-value">0.4/s</span>
+        </div>
+        <div class="tel-stat">
+          <span class="tel-label">STRESS INDEX</span>
+          <span id="telemetry-stress-value" class="tel-value val-calm">24%</span>
+        </div>
+        <div id="telemetry-override-badge" class="override-badge standby">
+          TELEMETRY MONITORED
+        </div>
+      </div>
+    </section>
+
+    <!-- Single HTML5 Canvas Stage Viewport -->
+    <main id="canvas-stage">
+      <canvas id="nano-canvas" width="960" height="540"></canvas>
+
+      <!-- KABIR'S BIO-CLEANSE PROTOCOL STAGE (Stages 1, 2, 3) -->
+      <div id="kabir-biocleanse-stage" class="hidden" style="display: none;">
+        <div class="kb-scanlines"></div>
+
+        <div id="kb-hud">
+          <div class="kb-panel">
+            <div class="kb-hud-row" id="kb-health-row">
+              <span id="kb-health-label">TISSUE STABILITY</span>
+              <span id="kb-health-text">100%</span>
+            </div>
+            <div class="kb-bar-bg"><div id="kb-health-bar" class="kb-bar-fill"></div></div>
+
+            <div class="kb-hud-row" id="kb-energy-row" style="margin-top: 15px;">
+              <span id="kb-energy-label">LASER INTENSITY</span>
+              <span id="kb-energy-text">100%</span>
+            </div>
+            <div class="kb-bar-bg"><div id="kb-energy-bar" class="kb-bar-fill green"></div></div>
+          </div>
+
+          <div class="kb-panel kb-panel-center" id="kb-panel-center">
+            <div class="kb-score-title" id="kb-score-title">LEVEL 1: WEALTHY PATIENT</div>
+            <div id="kb-score" class="kb-score-value">0 / 10</div>
+            <div class="kb-score-sub" id="kb-score-sub">PATHOGENS PURGED</div>
+          </div>
+
+          <div class="kb-panel kb-nav-panel">
+            <div class="kb-hud-row" style="margin-bottom: 8px;">
+              <span>PROTOCOL STAGE</span>
+              <span id="kb-stage-pill" style="color: #38bdf8;">1 / 3</span>
+            </div>
+            <div class="kb-nav-actions">
+              <button id="kb-btn-prev-stage" class="kb-mini-btn" title="Previous stage">◀ PREV</button>
+              <button id="kb-btn-next-stage" class="kb-mini-btn" title="Next stage">NEXT ▶</button>
+              <button id="kb-btn-open-stages" class="kb-mini-btn" title="Stages Dossier">STAGES 📑</button>
+            </div>
+          </div>
+        </div>
+
+        <canvas id="kb-game-canvas"></canvas>
+
+        <div id="kb-overlay">
+          <h1 id="kb-overlay-title">MICRO-VESSEL LASER PURGE</h1>
+          <h2 id="kb-overlay-subtitle">Protocol: Wealthy & Fully Insured (Easy Mode)</h2>
+          <p id="kb-overlay-desc">Use your <b>MOUSE</b> to aim the robotic laser scalpel. <b>CLICK & HOLD</b> on drifting mutant pathogens to dissolve them before they breach the vessel wall. <br><br><i>Note: The laser has a limited effective range. Let targets approach the scanning arc before firing!</i></p>
+          <div class="kb-overlay-btn-row">
+            <button id="kb-start-btn">Initialize Procedure</button>
+            <button id="kb-secondary-btn" class="hidden">Next Stage ⏩</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           RADHA GENETIC SPLICER STAGE (3 Stages — DNA Strand Traversal)
+           ================================================================ -->
+      <div id="radha-splicer-stage" class="hidden" style="display: none;">
+        <div class="rg-scanlines"></div>
+
+        <!-- HUD -->
+        <div id="rg-hud">
+          <div class="rg-panel">
+            <div class="rg-hud-row">
+              <span>SYNAPTIC INTEGRITY</span>
+              <span id="rg-integrity-text">100%</span>
+            </div>
+            <div class="rg-bar-bg"><div id="rg-integrity-bar" class="rg-bar-fill"></div></div>
+
+            <div class="rg-hud-row" style="margin-top: 12px;">
+              <span>STRAND PROGRESS</span>
+              <span id="rg-progress-text">0%</span>
+            </div>
+            <div class="rg-bar-bg"><div id="rg-progress-bar" class="rg-bar-fill green"></div></div>
+          </div>
+
+          <div class="rg-panel rg-panel-center">
+            <div class="rg-score-title" id="rg-status-text">HOVER START NODE</div>
+            <div class="rg-score-sub">GENETIC SPLICER — RADHA DEVI</div>
+          </div>
+
+          <div class="rg-panel rg-nav-panel">
+            <div class="rg-hud-row" style="margin-bottom: 8px;">
+              <span>SPLICER STAGE</span>
+              <span id="rg-stage-pill" style="color: #7c3aed;">1 / 3</span>
+            </div>
+            <div class="rg-nav-actions">
+              <button id="rg-btn-prev-stage" class="rg-mini-btn" title="Previous stage">◀ PREV</button>
+              <button id="rg-btn-next-stage" class="rg-mini-btn" title="Next stage">NEXT ▶</button>
+              <button id="rg-btn-open-stages" class="rg-mini-btn" title="Stages Dossier">STAGES 📑</button>
+            </div>
+          </div>
+        </div>
+
+        <canvas id="rg-game-canvas"></canvas>
+
+        <!-- Telemetry Footer -->
+        <div id="rg-telemetry">
+          <strong>[MOUSE TELEMETRY — RADHA DEVI CRISIS MONITOR]</strong>
+          &nbsp;|&nbsp; Velocity: <span id="rg-tel-vel">0</span> px/s
+          &nbsp;|&nbsp; Jitter: <span id="rg-tel-jit">0.00</span>
+          &nbsp;|&nbsp; Deviation: <span id="rg-tel-dev">0.00</span> px
+          &nbsp;|&nbsp; Stress: <span id="rg-tel-stress" style="color:#00ffaa;">STABLE</span>
+        </div>
+
+        <!-- Overlay -->
+        <div id="rg-overlay">
+          <h1 id="rg-overlay-title">STAGE I: GENETIC SPLICER</h1>
+          <h2 id="rg-overlay-subtitle">Stage 1: Cellular Strand Passage</h2>
+          <p id="rg-overlay-desc">Hover over the <b>START NODE</b> to begin. Follow the DNA strand corridor and reach the END node.</p>
+          <div class="rg-overlay-btn-row">
+            <button id="rg-start-btn">Initialize Splicing Procedure</button>
+            <button id="rg-secondary-btn" class="hidden">Replay ↺</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Case Footer Docket -->
+    <footer id="case-footer-bar">
+      <div class="footer-docket-info">
+        <span id="chapter-badge">DOSSIER LEVEL 1: ORTHOGONAL LOGIC RECALIBRATION</span>
+        <span>•</span>
+        <span>DRAG FROM LAUNCHER TO AIM • RELEASE TO FIRE PULSE</span>
+      </div>
+      <div class="footer-controls-hint">
+        [ SPACE / ENTER ] ADVANCE • [ R ] RETRY STAGE
+      </div>
+    </footer>
+
+    <!-- ====================================================================
+         FULL-SCREEN VISUAL NOVEL STORY OVERLAY (PROLOGUE & EPILOGUE)
+         ==================================================================== -->
+    <div id="vn-story-overlay" class="hidden">
+      <!-- Background CG Scene Layer -->
+      <div id="vn-bg-layer"></div>
+      <div class="vn-cinematic-vignette"></div>
+      <div id="vn-flash-overlay"></div>
+
+      <!-- Top Act & Clinical Case Banner -->
+      <div id="vn-act-banner" class="vn-act-header">
+        <span class="vn-act-pill" id="vn-act-title">ACT I: THE EXPOSURE</span>
+        <span class="vn-case-code" id="vn-patient-badge">CASE: SIDDHARTH RAO</span>
+      </div>
+
+      <!-- Dialogue Box Container -->
+      <div id="vn-dialogue-container">
+        <div id="dialogue-box">
+          <div class="dialogue-header-bar">
+            <div class="speaker-container">
+              <span id="dialogue-speaker-name" class="speaker-name speaker-narrator">Narrator</span>
+              <span id="dialogue-speaker-tag" class="speaker-tag">Clinical History</span>
+            </div>
+            <div class="dialogue-nav-actions">
+              <button id="btn-vn-skip-all" class="vn-bypass-btn" title="Jump directly to canvas gameplay">
+                SKIP TO SURGERY ⏩
+              </button>
+            </div>
+          </div>
+
+          <div class="dialogue-text-body">
+            <p id="dialogue-content">Loading case narrative...</p>
+            <span class="advance-indicator" id="vn-advance-cursor">▼</span>
+          </div>
+
+          <div class="dialogue-footer-bar">
+            <div class="dialogue-quick-bar">
+              <button id="btn-vn-auto" class="quick-action-btn">AUTO</button>
+              <button id="btn-vn-skip" class="quick-action-btn">FAST</button>
+            </div>
+            <button id="btn-vn-cta-action" class="vn-cta-jump-btn" style="display: none;">
+              COMMENCE SURGICAL STAGE 1 ▶
+            </button>
+            <div class="dialogue-hint-text">
+              [ CLICK / SPACE / ENTER TO ADVANCE ]
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Title Screen / Main Menu Overlay (Aged Sketchbook Cover) -->
+    <div id="title-screen">
+      <div class="title-book-cover">
+        <h2 class="main-game-title">NANO-PULSE</h2>
+        <p class="main-game-subtitle">THE MEDICAL GEOMETRY DOSSIERS</p>
+
+        <div class="menu-buttons-list">
+          <button id="btn-continue-session" class="menu-action-btn continue-btn" style="display: none;">
+            CONTINUE SESSION ▶
+          </button>
+          <button id="btn-start-game" class="menu-action-btn start-btn">
+            COMMENCE STORY: SIDDHARTH (UPPER-MID)
+          </button>
+          <button id="btn-select-patient" class="menu-action-btn">
+            PATIENT DOSSIERS & STORIES (3 TIERS)
+          </button>
+          <button id="btn-level-select" class="menu-action-btn">
+            SELECT RECOVERY STAGE
+          </button>
+          <button id="btn-how-to" class="menu-action-btn">
+            CLINICAL GEOMETRY GUIDE
+          </button>
+          <button id="btn-reset-progress" class="menu-action-btn reset-btn">
+            RESET PROGRESS (DAY 1)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- 1. Patient Dossiers Modal -->
+    <div id="patient-select-modal" class="modal-backdrop hidden">
+      <div class="modal-window">
+        <div class="modal-top-bar">
+          <h2 class="modal-top-title">SELECT PATIENT CLINICAL DOSSIER</h2>
+          <button class="close-modal-btn">&times;</button>
+        </div>
+        <div class="modal-scroll-body">
+          <div class="patient-grid">
+            <!-- Patient 1: Siddharth (Upper-Middle Class) -->
+            <div class="patient-choice-card" data-patient-id="siddharth">
+              <div class="pcc-badge tier-upper">UPPER-MIDDLE CLASS • VIP RETAINER ($24K/YR)</div>
+              <h3 class="pcc-name">SIDDHARTH RAO</h3>
+              <div class="pcc-diag-title">Cognitive Burnout & Prefrontal Friction</div>
+              <div class="pcc-role">Aura Private Sanatorium • VIP Suite 402</div>
+              <p class="pcc-desc">
+                Admitted to an ultra-luxury soundproof private suite with personal EEG telemetry. Executive corporate insurance buys zero waiting queues, concierge specialists, and unconstrained neuro-peptide therapy to protect corporate cognitive capital.
+              </p>
+              <div class="pcc-levels-tag">Stages: Specular Mirrors • Affine Matrix Transform • Geodesic Routing</div>
+              <button class="pcc-select-btn">PLAY VISUAL NOVEL STORY & DOSSIER →</button>
+            </div>
+
+            <!-- Patient 2: Kabir (Middle Class) -->
+            <div class="patient-choice-card" data-patient-id="kabir">
+              <div class="pcc-badge tier-middle">MIDDLE CLASS • GIG WORKER (NO COVERAGE)</div>
+              <h3 class="pcc-name">KABIR ANSARI</h3>
+              <div class="pcc-diag-title">Sensory Overload & Exhaustion Neural Spikes</div>
+              <div class="pcc-role">Municipal Trauma Wing 3 • Shared Acute Bay 11</div>
+              <p class="pcc-desc">
+                Admitted in soaked courier rain gear behind a thin vinyl curtain. Platform delivery app docks rating while patient is in tremors. Middle-class family maxes out credit cards for ₹35,000 hospital admission deposit before pharmacy releases meds.
+              </p>
+              <div class="pcc-levels-tag">Stages: Micro-Vessel Laser Purge • Resource Strain & Armored Strains • Survival & Apex Mutation</div>
+              <button class="pcc-select-btn">PLAY VISUAL NOVEL STORY & DOSSIER →</button>
+            </div>
+
+            <!-- Patient 3: Radha (Low-Income / Vulnerable Class) -->
+            <div class="patient-choice-card" data-patient-id="radha">
+              <div class="pcc-badge tier-vulnerable">LOW-INCOME / WORKING CLASS • DAILY WAGE</div>
+              <h3 class="pcc-name">RADHA DEVI</h3>
+              <div class="pcc-diag-title">Critical Synaptic Degradation & Dengue Shock</div>
+              <div class="pcc-role">District General Charitable Hospital • Ward 3 (Cot 14)</div>
+              <p class="pcc-desc">
+                Stifling 42-bed public charity ward with peeling walls and a single squeaking ceiling fan. Zero municipal safety gear provided; government dispensary out of platelet concentrate for 48 hours. Life hangs on desperate begging across city blood banks.
+              </p>
+              <div class="pcc-levels-tag">Stages: Micro-Needle Slits • Delaunay Triangulation • Compound Ricochets</div>
+              <button class="pcc-select-btn">PLAY VISUAL NOVEL STORY & DOSSIER →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Level Select Modal -->
+    <div id="level-select-modal" class="modal-backdrop hidden">
+      <div class="modal-window">
+        <div class="modal-top-bar">
+          <h2 class="modal-top-title">CLINICAL STAGES DOSSIER</h2>
+          <button class="close-modal-btn">&times;</button>
+        </div>
+        <div class="modal-scroll-body">
+          <div id="level-select-grid" class="level-select-grid-wrapper"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Clinical Journal Field Notes Modal -->
+    <div id="journal-notes-modal" class="modal-backdrop hidden">
+      <div class="modal-window">
+        <div class="modal-top-bar">
+          <h2 class="modal-top-title">PHYSICIAN'S CLINICAL FIELD NOTES</h2>
+          <button class="close-modal-btn">&times;</button>
+        </div>
+        <div class="modal-scroll-body">
+          <div id="journal-dossier-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Clinical Geometry Guide Modal -->
+    <div id="how-to-modal" class="modal-backdrop hidden">
+      <div class="modal-window">
+        <div class="modal-top-bar">
+          <h2 class="modal-top-title">NANO-PULSE CLINICAL MANUAL</h2>
+          <button class="close-modal-btn">&times;</button>
+        </div>
+        <div class="modal-scroll-body" style="line-height: 1.6; color: #d4c5a9; font-size: 0.92rem;">
+          <p style="margin-bottom: 14px;">
+            <strong>NANO-PULSE</strong> merges visual novel case histories with socioeconomic medical procedures across three tiers, playable across 3 difficulty tiers (Resident, Specialist, Chief Surgeon).
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px;">
+            <div>
+              <strong style="color: #fcd34d;">Siddharth (Upper-Middle Class) — Rigid Precision:</strong>
+              <ul style="padding-left: 20px; margin-top: 4px;">
+                <li><strong>Stage 1 - Specular Mirrors:</strong> Law of reflection (θ_i = θ_r) off 45° planar mirrors.</li>
+                <li><strong>Stage 2 - Affine Transformation:</strong> Drag to rotate and scale the blue vector glyph onto the red target outline (Press ENTER or Space to commit matrix congruence).</li>
+                <li><strong>Stage 3 - Geodesic Routing:</strong> Multi-bounce path through crystalline neural barriers.</li>
+              </ul>
+            </div>
+            <div>
+              <strong style="color: #a7f3d0;">Kabir (Middle Class) — Bio-Cleanse Laser Protocols:</strong>
+              <ul style="padding-left: 20px; margin-top: 4px;">
+                <li><strong>Stage 1 - Wealthy Patient Protocol:</strong> Precision laser scalpel aiming & micro-vessel purge (Dissolve 10 pathogens).</li>
+                <li><strong>Stage 2 - Middle-Class Protocol:</strong> Resource strain with accelerated energy depletion, sluggish recharge, and heavily armored purple strains (Purge 15 pathogens).</li>
+                <li><strong>Stage 3 - Lower-Class Protocol:</strong> Extreme resource starvation, brutal overheat lockout, and elimination of the colossal Apex Boss Mutation.</li>
+              </ul>
+            </div>
+            <div>
+              <strong style="color: #fca5a5;">Radha (Low-Income Class) — Fragile Margin:</strong>
+              <ul style="padding-left: 20px; margin-top: 4px;">
+                <li><strong>Stage 1 - Micro-Needle Slits:</strong> Extreme sub-degree aperture threading between toxic decay plates.</li>
+                <li><strong>Stage 2 - Delaunay Triangulation:</strong> Click three nodes to span non-overlapping triangles and reconstruct necrotic tissue.</li>
+                <li><strong>Stage 3 - Compound Ricochets:</strong> Minimum required ricochet count before striking final receptive node.</li>
+              </ul>
+            </div>
+            <div>
+              <strong style="color: #34d399;">Difficulty Levels:</strong>
+              <ul style="padding-left: 20px; margin-top: 4px;">
+                <li><strong>Resident:</strong> Full 85-step trajectory guide line, standard speed, generous tolerance.</li>
+                <li><strong>Specialist:</strong> Short 28-step trajectory guide, +40% speed, smaller target margins.</li>
+                <li><strong>Chief Surgeon:</strong> Blind aiming (0 guide line), +80% speed, pinpoint precision required.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Neural Stress & Cognitive Report Card Modal -->
+    <div id="report-card" class="modal-backdrop report-card-modal hidden" style="display: none;"></div>
+
+  </div>
+
+  <!-- Game Scripts (Unified Modular Architecture) -->
+  <script src="js/audio.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/telemetry.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/kabirGame.js"></script>
+  <script src="js/radhaGame.js"></script>
+  <script src="js/canvasEngine.js"></script>
+  <script src="js/story.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

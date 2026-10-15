@@ -1,0 +1,473 @@
+/* ==============================================================================
+   NANO-PULSE • NEURAL STRESS & COGNITIVE REPORT CARD & TELEMETRY STYLES
+   Paper-Textured Cyberpunk / Medical Journal Aesthetic
+   ============================================================================== */
+
+/* Bio-Harmonic Override Calming Theme Shifts (Mint / Teal) */
+body.bio-harmonic-override-active {
+  box-shadow: inset 0 0 100px rgba(52, 211, 153, 0.28) !important;
+  transition: all 0.8s ease;
+}
+
+body.bio-harmonic-override-active #game-top-bar {
+  border-bottom-color: rgba(52, 211, 153, 0.6) !important;
+  background: rgba(6, 28, 22, 0.95) !important;
+}
+
+body.bio-harmonic-override-active .tel-stat {
+  border-color: rgba(52, 211, 153, 0.5) !important;
+}
+
+/* Floating Bio-Harmonic Toast */
+.bio-harmonic-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(6, 28, 22, 0.94);
+  border: 1.5px solid #34d399;
+  border-radius: 8px;
+  padding: 14px 20px;
+  z-index: 9999;
+  box-shadow: 0 0 30px rgba(52, 211, 153, 0.35);
+  max-width: 420px;
+  animation: slideInToast 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #e2e8f0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  pointer-events: none;
+}
+
+.bio-harmonic-toast.hidden {
+  display: none !important;
+}
+
+.bio-harmonic-toast .toast-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.bio-harmonic-toast .toast-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.bio-harmonic-toast strong {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
+  color: #34d399;
+  margin-bottom: 4px;
+}
+
+.bio-harmonic-toast p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #a7f3d0;
+  line-height: 1.4;
+}
+
+@keyframes slideInToast {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Calibrating HUD Badge */
+.override-badge.calibrating {
+  background: rgba(56, 189, 248, 0.15) !important;
+  border-color: #38bdf8 !important;
+  color: #7dd3fc !important;
+  animation: pulseCalib 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseCalib {
+  0%, 100% { border-color: rgba(56, 189, 248, 0.8); box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+  50% { border-color: rgba(56, 189, 248, 0.3); box-shadow: none; }
+}
+
+/* ==============================================================================
+   REPORT CARD MODAL (#report-card)
+   ============================================================================== */
+/* ==============================================================================
+   SILENT ADAPTIVE OVERRIDE STYLES (CALMING ENVIRONMENT TOGGLES)
+   ============================================================================== */
+body.bio-harmonic-override-active {
+  transition: background-color 1.5s ease, filter 1.5s ease;
+  background-color: #0d1614 !important;
+}
+
+#nano-canvas.bio-harmonic-calm {
+  transition: filter 1.2s ease, box-shadow 1.2s ease;
+  filter: sepia(20%) hue-rotate(110deg) brightness(0.92) contrast(95%);
+  box-shadow: 0 0 45px rgba(52, 211, 153, 0.22);
+}
+
+#canvas-stage.bio-harmonic-active {
+  transition: border-color 1.2s ease;
+  border-color: rgba(52, 211, 153, 0.4) !important;
+}
+
+/* ==============================================================================
+   REQUIREMENT 5: THE GRITTY REPORT CARD UI (PHYSICAL DOSSIER ON A CLIPBOARD)
+   Strict Guidelines:
+   - NO neon, NO glowing borders, NO cyberpunk styles.
+   - background-color: #d6cbbd (sepia / dirty paper).
+   - color: #1a1a1a (faded black ink).
+   - font-family: 'Courier New', Courier, monospace (typewriter simulation).
+   - border: 2px solid #333 with inset box-shadow 0 0 50px rgba(0,0,0,0.3) (stained paper).
+   - .ink-splatter pseudo-element irregular dark ink spots on corners.
+   ============================================================================== */
+
+.report-card-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(18, 16, 14, 0.88);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.report-card-modal.hidden {
+  display: none !important;
+}
+
+/* Clipboard Wooden Frame & Paper Container */
+.clipboard-container {
+  position: relative;
+  width: 100%;
+  max-width: 940px;
+  max-height: 94vh;
+  margin: auto;
+  background-color: #d6cbbd;
+  color: #1a1a1a;
+  font-family: 'Courier New', Courier, monospace;
+  border: 2px solid #333333;
+  box-shadow: 
+    inset 0 0 50px rgba(0, 0, 0, 0.32),
+    0 18px 45px rgba(0, 0, 0, 0.75),
+    0 0 0 8px #5c4e3e;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Vintage Heavy Metal Clip */
+.clipboard-clip {
+  width: 170px;
+  height: 26px;
+  background: #3e3831;
+  border: 2px solid #1a1a1a;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.15), 0 3px 6px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+
+.clipboard-clip::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 6px;
+  background: #181512;
+  border-radius: 3px;
+}
+
+/* .ink-splatter: Dark, Irregular Spots on Corners (Strictly Pseudo-Elements) */
+.ink-splatter {
+  position: relative;
+}
+
+.ink-splatter::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  width: 38px;
+  height: 32px;
+  background: radial-gradient(circle at 45% 45%, rgba(18, 16, 14, 0.88) 0%, rgba(35, 30, 24, 0.72) 48%, transparent 72%);
+  border-radius: 48% 52% 64% 36% / 44% 56% 44% 56%;
+  transform: rotate(28deg);
+  pointer-events: none;
+  z-index: 5;
+  filter: contrast(160%);
+}
+
+.ink-splatter::after {
+  content: '';
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  width: 44px;
+  height: 36px;
+  background: radial-gradient(circle at 50% 50%, rgba(18, 16, 14, 0.85) 0%, rgba(40, 32, 26, 0.65) 52%, transparent 76%);
+  border-radius: 62% 38% 58% 42% / 38% 62% 38% 62%;
+  transform: rotate(-18deg);
+  pointer-events: none;
+  z-index: 5;
+  filter: contrast(160%);
+}
+
+/* Dossier Fixed Header */
+.dossier-fixed-header {
+  padding: 16px 24px 12px 24px;
+  border-bottom: 2px solid #333333;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.dfh-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  opacity: 0.85;
+  margin-bottom: 4px;
+}
+
+.dfh-stamp {
+  border: 1px solid #7c2d12;
+  color: #7c2d12;
+  padding: 2px 6px;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+}
+
+.dfh-crn {
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.dfh-operator {
+  margin: 6px 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+.dfh-meta {
+  font-size: 0.7rem;
+  opacity: 0.85;
+  letter-spacing: 0.8px;
+}
+
+/* Dossier Body */
+.dossier-body {
+  padding: 18px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Sections */
+.dossier-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.section-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #1a1a1a;
+  margin: 0;
+  border-bottom: 1px solid #444444;
+  padding-bottom: 3px;
+  text-transform: uppercase;
+}
+
+/* Cognitive Resilience Profile Box */
+.profile-box {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px dashed #444444;
+  padding: 10px 14px;
+}
+
+.profile-classification {
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.profile-classification strong {
+  background: #1a1a1a;
+  color: #d6cbbd;
+  padding: 2px 6px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+}
+
+.profile-text {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* Bearable Stress Threshold Box */
+.threshold-metric-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px dashed #444444;
+  padding: 10px 14px;
+}
+
+.threshold-num {
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.threshold-explanation {
+  font-size: 0.76rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+/* Typewriter Data Table */
+.dossier-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.76rem;
+  text-align: left;
+  border-top: 2px solid #333333;
+  border-bottom: 2px solid #333333;
+}
+
+.dossier-table th {
+  padding: 8px 10px;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  font-weight: 800;
+  border-bottom: 2px solid #333333;
+  background: rgba(0, 0, 0, 0.05);
+  color: #1a1a1a;
+  text-transform: uppercase;
+}
+
+.dossier-table td {
+  padding: 7px 10px;
+  border-bottom: 1px dashed #666666;
+  color: #1a1a1a;
+}
+
+.dossier-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Mindset Tags (Typewriter Faded Ink Look) */
+.mindset-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  border: 1px solid #333333;
+  text-transform: uppercase;
+}
+
+.mindset-methodical {
+  background: #c3d9c5;
+  color: #143318;
+}
+
+.mindset-cognitive-friction {
+  background: #ede0b9;
+  color: #423508;
+}
+
+.mindset-task-saturation {
+  background: #ecd2b9;
+  color: #4a2105;
+}
+
+.mindset-acute-panic {
+  background: #e8b6b6;
+  color: #4d0a0a;
+}
+
+/* Recommendations */
+.dossier-recommendations {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  opacity: 0.92;
+}
+
+.dossier-recommendations li {
+  margin-bottom: 4px;
+}
+
+/* Dossier Footer & Action Buttons */
+.dossier-footer {
+  padding: 14px 24px;
+  border-top: 2px solid #333333;
+  background: rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+#exportDataBtn,
+#clearLogsBtn,
+.rc-btn-close {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.76rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #1a1a1a;
+  background: #c2b5a1;
+  border: 2px solid #333333;
+  padding: 8px 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 #333333;
+  transition: transform 0.08s, box-shadow 0.08s, background 0.1s;
+}
+
+#exportDataBtn:hover,
+#clearLogsBtn:hover,
+.rc-btn-close:hover {
+  background: #ded4c3;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #333333;
+}
+
+#exportDataBtn:active,
+#clearLogsBtn:active,
+.rc-btn-close:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #333333;
+}
+
+#clearLogsBtn {
+  background: #c7a7a7;
+}
+
+#clearLogsBtn:hover {
+  background: #d9b8b8;
+}
+
